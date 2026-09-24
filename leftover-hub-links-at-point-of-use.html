@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Leftover Hub Links At The Point Of Use</title>
+  <style>
+    @page { size: letter; margin: 0.6in; }
+    * { box-sizing: border-box; }
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      color: #1f1f1f;
+      line-height: 1.45;
+      font-size: 11pt;
+      margin: 0;
+      padding: 24px 28px 40px;
+    }
+    h1 { font-size: 20pt; font-weight: 600; margin: 0 0 8px; }
+    h2 { font-size: 14pt; font-weight: 600; margin: 32px 0 8px; }
+    h3 { font-size: 12pt; font-weight: 600; margin: 0 0 6px; }
+    p { margin: 0 0 10px; }
+    .muted { color: #555; }
+    .small { font-size: 9.5pt; color: #555; }
+    .callout {
+      border: 1px solid #c5d4e8;
+      background: #f4f8fc;
+      padding: 12px 14px;
+      margin: 16px 0 20px;
+    }
+    .callout .label { display: block; font-weight: 600; margin-bottom: 4px; }
+    table { width: 100%; border-collapse: collapse; font-size: 9.5pt; margin: 8px 0 16px; }
+    th, td { border: 1px solid #d8d8d8; padding: 7px 8px; text-align: left; vertical-align: top; }
+    th { background: #f3f3f3; font-weight: 600; }
+    tr:nth-child(even) td { background: #fafafa; }
+    .pill {
+      display: inline-block;
+      border: 1px solid #bbb;
+      padding: 1px 8px;
+      font-size: 8.5pt;
+      white-space: nowrap;
+    }
+    .pill.keep { border-color: #6a9a6a; background: #eef6ee; }
+    .pill.move { border-color: #8a7a3a; background: #faf6e8; }
+    .pill.drop { border-color: #b07070; background: #f8eeee; }
+    .wire {
+      border: 1px solid #ccc;
+      padding: 0;
+      background: #f7f7f7;
+      margin: 10px 0 18px;
+    }
+    .wire-bar {
+      background: #1f1f1f;
+      color: #fff;
+      padding: 8px 12px;
+      font-size: 9.5pt;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .wire-bar .brand { font-weight: 600; }
+    .mast {
+      display: flex;
+      gap: 18px;
+      padding: 8px 12px;
+      background: #fff;
+      border-bottom: 2px solid #c00;
+      font-size: 10pt;
+    }
+    .mast .on {
+      border-bottom: 2px solid #c00;
+      margin-bottom: -10px;
+      padding-bottom: 8px;
+      font-weight: 600;
+    }
+    .wire-body { padding: 12px; }
+    .alert {
+      border: 1px solid #c9a227;
+      background: #fff8e4;
+      padding: 8px 10px;
+      font-size: 9.5pt;
+      margin: 0 0 10px;
+    }
+    .search {
+      border: 1px solid #ddd;
+      background: #fff;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .search-row {
+      display: flex;
+      gap: 8px;
+    }
+    .fake-input {
+      flex: 1;
+      border: 1px solid #bbb;
+      padding: 6px 8px;
+      color: #777;
+      background: #fff;
+      font-size: 9.5pt;
+    }
+    .fake-btn {
+      border: 1px solid #c00;
+      background: #c00;
+      color: #fff;
+      padding: 6px 12px;
+      font-size: 9.5pt;
+    }
+    .cards {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .card {
+      flex: 1;
+      border: 1px solid #ddd;
+      background: #fff;
+      padding: 8px 10px;
+    }
+    .card .kicker { font-size: 8.5pt; color: #555; margin: 0 0 4px; }
+    .foot {
+      display: flex;
+      gap: 16px;
+      margin-top: 10px;
+      font-size: 9.5pt;
+      color: #1f4e79;
+      border-top: 1px solid #ddd;
+      padding-top: 8px;
+    }
+    .tabs { display: flex; gap: 0; margin-bottom: 8px; }
+    .tab {
+      border: 1px solid #ccc;
+      background: #eee;
+      padding: 6px 12px;
+      font-size: 9.5pt;
+    }
+    .tab.on { background: #fff; border-bottom-color: #fff; font-weight: 600; }
+    .sev {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .info {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      line-height: 12px;
+      text-align: center;
+      border: 1px solid #1f4e79;
+      border-radius: 50%;
+      font-size: 8pt;
+      color: #1f4e79;
+    }
+    .badge {
+      display: inline-block;
+      border: 1px solid #c9a227;
+      background: #fff8e4;
+      padding: 0 6px;
+      font-size: 8pt;
+    }
+    .two { display: flex; gap: 16px; }
+    .two > div { flex: 1; min-width: 0; }
+    .note { font-size: 9.5pt; color: #555; margin: 0 0 12px; }
+    .footer { font-size: 9pt; color: #666; margin-top: 28px; }
+    .status { color: #8a5a00; font-weight: 600; }
+    .ok { color: #2d6a2d; }
+    a { color: #1f4e79; }
+  </style>
+</head>
+<body>
+  <h1>Leftover hub links at the point of use</h1>
+  <p class="muted">UX recommendation for the Product Security Center leftover box. CVE database and Security advisories move to the masthead. This file shows where the other six links live. Not a live portal change.</p>
+
+  <div class="callout">
+    <span class="label">The change in one sentence</span>
+    Retire the two-column box. Put each leftover link where people already do that job: bulletins on Security updates, severity next to the Severity column, story and process on Vulnerability management, data and labs in tools and learn.
+  </div>
+
+  <h2>What happens to the leftover box</h2>
+  <p class="note">Today the box lists eight destinations under Security updates and Vulnerabilities. After the masthead owns two of them, the remaining six are not one family. Do not keep a thinner version of the same box. Do not reuse those two headings on the Center. They now belong to the masthead.</p>
+  <table>
+    <thead>
+      <tr><th>Link in the box today</th><th>Action</th><th>Where it lives after</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Security advisories</td>
+        <td><span class="pill keep">Masthead</span></td>
+        <td>Already planned. Security updates tab on the Center masthead. Full RHSA list.</td>
+      </tr>
+      <tr>
+        <td>CVE database</td>
+        <td><span class="pill keep">Masthead</span></td>
+        <td>Already planned. CVE database tab on the Center masthead. Full CVE list.</td>
+      </tr>
+      <tr>
+        <td>Security bulletins</td>
+        <td><span class="pill move">Move</span></td>
+        <td>One RHSB index as a Bulletins tab on Security updates. Current-bulletins strip on the Center only while a bulletin is ongoing. Badge and detail link on a CVE only when that CVE is covered. Not a second catalog on the CVE page. Not a filter on the advisory table.</td>
+      </tr>
+      <tr>
+        <td>Severity ratings</td>
+        <td><span class="pill move">Move</span></td>
+        <td>Info control beside the Severity column on both lookup pages. Opens /security/updates/classification. Remove from any hub list.</td>
+      </tr>
+      <tr>
+        <td>Vulnerability management</td>
+        <td><span class="pill keep">Promote</span></td>
+        <td>How we respond card on the Center first screen, beside Secure development and Coordinated disclosure.</td>
+      </tr>
+      <tr>
+        <td>Incident response plan</td>
+        <td><span class="pill move">Nest</span></td>
+        <td>Child of Vulnerability management: How we escalate. Not a sibling of CVE.</td>
+      </tr>
+      <tr>
+        <td>Security data</td>
+        <td><span class="pill move">Nest</span></td>
+        <td>One For scanners and APIs link in the Center tools row. No catalog teaser on the Center.</td>
+      </tr>
+      <tr>
+        <td>Security labs</td>
+        <td><span class="pill move">Nest</span></td>
+        <td>Learn row on the Center, and a Learn section on Vulnerability management. Not under Security updates.</td>
+      </tr>
+      <tr>
+        <td>The two-column box itself</td>
+        <td><span class="pill drop">Retire</span></td>
+        <td>Gone. The leftover items are lookup help, story, tools, and training. They do not share a box.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Center first screen</h2>
+  <p class="note">Lookup sits in the masthead. The leftover box is gone. A bulletin strip appears only when an RHSB is ongoing. Story cards carry how we work. Tools and learn sit at the bottom, not as peer lookup destinations.</p>
+  <div class="wire">
+    <div class="wire-bar">
+      <span class="brand">Red Hat Product Security Center</span>
+      <span>Search the portal</span>
+    </div>
+    <div class="mast">
+      <span class="on">CVE database</span>
+      <span>Security updates</span>
+    </div>
+    <div class="wire-body">
+      <div class="alert">
+        Current bulletin: RHSB-2026-011 Network stack privilege escalations. Status: <span class="status">Ongoing</span>. Open the bulletin. Browse all bulletins on Security updates.
+      </div>
+      <div class="search">
+        <p class="small">Working lookup stays here. Do not merge policy copy into this module.</p>
+        <div class="search-row">
+          <div class="fake-input">Find a CVE, product, or advisory</div>
+          <div class="fake-btn">Submit</div>
+        </div>
+      </div>
+      <p class="small">How we work. Use these when you need the story, not a lookup.</p>
+      <div class="cards">
+        <div class="card">
+          <p class="kicker">How we build</p>
+          <h3>Secure development</h3>
+          <p class="small">SDL article. Build, harden, sign.</p>
+        </div>
+        <div class="card">
+          <p class="kicker">How we respond</p>
+          <h3>Vulnerability management</h3>
+          <p class="small">Whitepaper, video, support limits.</p>
+          <p class="small">Child link: How we escalate (incident response plan).</p>
+        </div>
+        <div class="card">
+          <p class="kicker">How to report</p>
+          <h3>Coordinated disclosure</h3>
+          <p class="small">secalert steps, embargo, what to include.</p>
+        </div>
+      </div>
+      <div class="foot">
+        <span>Lifecycle update policy</span>
+        <span>For scanners and APIs</span>
+        <span>Learn</span>
+        <span>Contacts</span>
+      </div>
+      <p class="small">For scanners and APIs goes to Security data. Learn goes to Security labs and the vulnerability walkthrough.</p>
+    </div>
+  </div>
+
+  <h2>Security updates owns the bulletin index</h2>
+  <p class="note">Advisories are the full RHSA catalog. Bulletins are a separate list of RHSB documents. The Bulletins tab is not a filter that hides advisory rows. One bulletin can point at several CVEs and several advisories. A bulletin can exist while fixes are still rolling out.</p>
+  <div class="two">
+    <div>
+      <div class="wire">
+        <div class="wire-bar"><span class="brand">Security updates</span><span>Advisories tab</span></div>
+        <div class="mast">
+          <span>CVE database</span>
+          <span class="on">Security updates</span>
+        </div>
+        <div class="wire-body">
+          <div class="tabs">
+            <div class="tab on">Advisories</div>
+            <div class="tab">Bulletins</div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Advisory</th>
+                <th>Synopsis</th>
+                <th><span class="sev">Severity <span class="info" title="Opens severity ratings">i</span></span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>RHSA-2026:7715</td><td>Ansible Automation Platform security and bug fix</td><td>Critical</td></tr>
+              <tr><td>RHSA-2026:7714</td><td>Ansible Automation Platform security and bug fix</td><td>Critical</td></tr>
+              <tr><td>RHSA-2026:7403</td><td>Hardened Images RPMs</td><td>None</td></tr>
+            </tbody>
+          </table>
+          <p class="small">The i beside Severity opens /security/updates/classification. Same control on the CVE page.</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="wire">
+        <div class="wire-bar"><span class="brand">Security updates</span><span>Bulletins tab</span></div>
+        <div class="mast">
+          <span>CVE database</span>
+          <span class="on">Security updates</span>
+        </div>
+        <div class="wire-body">
+          <div class="tabs">
+            <div class="tab">Advisories</div>
+            <div class="tab on">Bulletins</div>
+          </div>
+          <table>
+            <thead>
+              <tr><th>Bulletin</th><th>Impact</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>RHSB-2026-011 Network stack privilege escalations</td><td>Important</td><td><span class="status">Ongoing</span></td></tr>
+              <tr><td>RHSB-2026-010 GhostLock</td><td>Important</td><td><span class="ok">Resolved</span></td></tr>
+              <tr><td>RHSB-2026-003 Dirty Frag</td><td>Important</td><td><span class="ok">Resolved</span></td></tr>
+            </tbody>
+          </table>
+          <p class="small">This list is RHSB documents. Each bulletin then links out to its CVEs and to the advisories that ship the fixes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2>CVE page shows a bulletin only when the CVE is covered</h2>
+  <p class="note">The CVE page job is find a CVE. Most rows have no RHSB. Do not add a Bulletins tab here. That would copy the same short catalog onto a second home. When a CVE belongs to a bulletin, show a badge on the row and a link on the detail page. An optional Has bulletin filter is enough during an incident.</p>
+  <div class="wire">
+    <div class="wire-bar"><span class="brand">CVE database</span><span>No Bulletins tab</span></div>
+    <div class="mast">
+      <span class="on">CVE database</span>
+      <span>Security updates</span>
+    </div>
+    <div class="wire-body">
+      <div class="search-row" style="margin-bottom:8px;">
+        <div class="fake-input">CVE-2026-31431</div>
+        <div class="fake-btn">Submit</div>
+      </div>
+      <p class="small">Optional filter: Has bulletin. Not a second bulletin catalog.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>CVE</th>
+            <th>Description</th>
+            <th><span class="sev">Severity <span class="info">i</span></span></th>
+            <th>Bulletin</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>CVE-2026-31431</td>
+            <td>Cryptographic subsystem privilege escalation. Copy Fail.</td>
+            <td>Important</td>
+            <td><span class="badge">RHSB-2026-002</span></td>
+          </tr>
+          <tr>
+            <td>CVE-2026-8474</td>
+            <td>Automation controller input validation in sanitize_jinja.</td>
+            <td>Important</td>
+            <td class="muted">None</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="card">
+        <p class="kicker">CVE detail, only if covered</p>
+        <h3>CVE-2026-31431</h3>
+        <p class="small">This CVE is part of bulletin RHSB-2026-002 Copy Fail. Open the bulletin for mitigations, product steps, and ongoing vs resolved. Advisories that ship the fix stay on the CVE page as they do today.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Vulnerability management holds the nested story links</h2>
+  <p class="note">Promote Vulnerability management out of the leftover list. Nest the incident response plan here. Point to Security data for scanners. Point to Security labs as Learn. Do not retell those specialist pages on the Center.</p>
+  <div class="wire">
+    <div class="wire-bar"><span class="brand">Vulnerability management</span><span>Story page</span></div>
+    <div class="wire-body">
+      <h3>An open approach to vulnerability management</h3>
+      <p class="small">Whitepaper and video stay here. Support limits stay here.</p>
+      <div class="cards">
+        <div class="card">
+          <p class="kicker">How we escalate</p>
+          <h3>Incident response plan</h3>
+          <p class="small">When PSIRT declares Minor, Exploit, or Major. Child of this page, not a Center hub link.</p>
+        </div>
+        <div class="card">
+          <p class="kicker">For scanners and APIs</p>
+          <h3>Security data</h3>
+          <p class="small">CSAF, VEX, OVAL, SBOM. One link. No teaser catalog.</p>
+        </div>
+        <div class="card">
+          <p class="kicker">Learn</p>
+          <h3>Security labs</h3>
+          <p class="small">Walkthrough sessions on scanners, data, and remediation. Training, not lookup.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Why bulletins are not a subset of advisories</h2>
+  <table>
+    <thead>
+      <tr><th></th><th>Security advisories</th><th>Security bulletins</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>What it is</td><td>The errata you install. RHSA catalog.</td><td>An extra briefing for a high-profile case. RHSB document.</td></tr>
+      <tr><td>How many</td><td>Thousands</td><td>A short list</td></tr>
+      <tr><td>Typical contents</td><td>Packages, products, CVEs, overall severity</td><td>Story, ongoing vs resolved, mitigations, diagnostics, product map</td></tr>
+      <tr><td>Relationship</td><td>Most never get a bulletin</td><td>One bulletin can point at several CVEs and several advisories</td></tr>
+      <tr><td>Timing</td><td>Published when the fix ships</td><td>Can exist while fixes are still rolling out</td></tr>
+      <tr><td>UI</td><td>Advisories tab on Security updates</td><td>Bulletins tab listing RHSB documents, not filtered RHSA rows</td></tr>
+    </tbody>
+  </table>
+
+  <p class="footer">UX recommendation only. Aligns with Product Security After Combining Pages. Source: public Customer Portal URLs and the leftover box on access.redhat.com/security, read Sep 24 2026.</p>
+</body>
+</html>
