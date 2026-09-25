@@ -53,7 +53,9 @@
       gap: 0;
       padding: 0 16px 0 12px;
       height: 72px;
-      position: relative;
+      position: sticky;
+      top: 0;
+      z-index: 80;
     }
     .brand {
       display: flex;
@@ -379,8 +381,9 @@
       text-decoration: underline;
     }
 
+    html { scroll-padding-top: 72px; }
     .page { display: none; padding: 28px 36px 48px; }
-    .page.on { display: block; }
+    .page.on { display: block; scroll-margin-top: 72px; }
 
     h1 {
       font-family: "Red Hat Display", sans-serif;
@@ -909,7 +912,7 @@
         </button>
       </div>
     </header>
-    <div class="ai-coach" id="aiCoach" role="dialog" aria-label="Ask ProdSec AI">
+    <div class="ai-coach" id="aiCoach" aria-label="Ask ProdSec AI">
       <div class="ai-coach-card" id="aiCoachCard">
         <button class="close" type="button" id="aiCoachClose" aria-label="Close">
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
@@ -946,7 +949,7 @@
       <div class="hero">
         <div>
           <h1>Red Hat Product Security Center</h1>
-          <p class="lede">Search Red Hat security advisories, CVE status, and product impacts, or integrate our CVE, advisory, and errata data into your scanner, script, or MCP client. Learn more about our software build process, vulnerability handling, or how to report a flaw using the links below.</p>
+          <p class="lede">Search Red Hat security advisories and CVE data, or integrate our feeds into your tools. Explore our vulnerability process or report a flaw using the links below.</p>
           <form class="search" id="homeSearch" role="search">
             <span class="search-icon" aria-hidden="true">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -1567,6 +1570,7 @@ function showCoach() {
   $("#aiCoach").classList.add("show");
   $("#askAi").classList.add("hint");
   placeCoach();
+  window.scrollTo(0, 0);
 }
 function hideCoach() {
   $("#aiCoach").classList.remove("show");
@@ -1585,7 +1589,10 @@ $all("#aiCoach .prompts button").forEach(btn => {
 window.addEventListener("resize", () => {
   if ($("#aiCoach").classList.contains("show")) placeCoach();
 });
-requestAnimationFrame(showCoach);
+requestAnimationFrame(() => {
+  showCoach();
+  window.scrollTo(0, 0);
+});
 function setLoggedIn(on) {
   $("#mastLogin").classList.toggle("logged-in", on);
   $("#mastLogin").setAttribute("aria-label", on ? "Account" : "Log in");
