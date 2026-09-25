@@ -42,6 +42,7 @@
       background: #fff;
       min-height: 90vh;
       border: 1px solid #ddd;
+      position: relative;
     }
 
     .top {
@@ -96,7 +97,7 @@
       color: #c7c7c7;
       background: none;
       border: 0;
-      padding: 0 14px;
+      padding: 0 10px;
       font-size: 12px;
       font-weight: 400;
       line-height: 1;
@@ -145,13 +146,163 @@
     }
     .tool:hover { background: #2a2a2a; }
     .tool svg { display: block; }
-    .avatar {
-      width: 28px;
-      height: 28px;
+    .tool.ai.hint {
+      background: #2a2a2a;
+      box-shadow: inset 0 -3px 0 var(--red);
+    }
+    .ai-coach {
+      display: none;
+      position: absolute;
+      top: 72px;
+      left: 0;
+      right: 0;
+      z-index: 60;
+      pointer-events: none;
+    }
+    .ai-coach.show { display: block; }
+    .ai-coach-card {
+      pointer-events: auto;
+      position: absolute;
+      top: 12px;
+      width: 380px;
+      background: #fff;
+      border: 1px solid #d2d2d2;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      padding: 16px 16px 12px;
+    }
+    .ai-coach-card::before {
+      content: "";
+      position: absolute;
+      top: -7px;
+      left: var(--arrow, 50%);
+      width: 14px;
+      height: 14px;
+      background: #fff;
+      border-left: 1px solid #d2d2d2;
+      border-top: 1px solid #d2d2d2;
+      transform: translateX(-50%) rotate(45deg);
+    }
+    .ai-coach-card .close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: none;
+      border: 0;
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      color: #6a6e73;
+    }
+    .ai-coach-card p {
+      margin: 0 28px 12px 0;
+      font-size: 14px;
+      line-height: 1.45;
+      color: #151515;
+    }
+    .ai-coach-card .prompts {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .ai-coach-card .prompts button {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: #f0f0f0;
+      border: 0;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 13px;
+      line-height: 1.35;
+      color: #151515;
+      cursor: pointer;
+    }
+    .ai-coach-card .prompts button:hover { background: #e6e6e6; }
+    .tool.login {
+      min-width: 56px;
+      padding: 0 10px;
+      margin-left: 2px;
+    }
+    .tool.login .login-anon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+    .tool.login .login-ava {
+      display: none;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
-      background: #b8a7f5;
-      margin-left: 8px;
-      flex: 0 0 28px;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .tool.login.logged-in {
+      min-width: 48px;
+    }
+    .tool.login.logged-in .login-anon { display: none; }
+    .tool.login.logged-in .login-ava { display: block; }
+    .chat-drawer {
+      display: none;
+      position: absolute;
+      top: 72px;
+      right: 0;
+      width: 360px;
+      max-width: 100%;
+      height: calc(100% - 72px);
+      background: #fff;
+      border-left: 1px solid var(--line);
+      z-index: 50;
+      box-shadow: -8px 0 24px rgba(0,0,0,0.08);
+      flex-direction: column;
+    }
+    .chat-drawer.open { display: flex; }
+    .chat-drawer .chat-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+    .chat-drawer .chat-top h2 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0;
+    }
+    .chat-drawer .chat-top .chat-close {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: 1px solid #8a8d90;
+      border-radius: 4px;
+      font-size: 13px;
+      line-height: 1;
+      cursor: pointer;
+      color: var(--ink);
+      padding: 6px 10px;
+    }
+    .chat-drawer .chat-top .chat-close:hover { background: #f5f5f5; }
+    .chat-drawer .body {
+      padding: 16px;
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--ink);
+      flex: 1;
+    }
+    .chat-drawer .composer {
+      display: flex;
+      gap: 8px;
+      padding: 12px 16px 16px;
+      border-top: 1px solid var(--line);
+    }
+    .chat-drawer .composer input {
+      flex: 1;
+      border: 1px solid #8a8d90;
+      padding: 8px 10px;
+      font-size: 14px;
     }
 
     nav.mast button.navbtn .caret {
@@ -239,13 +390,18 @@
     }
     h2 { font-size: 20px; font-weight: 500; margin: 0 0 8px; }
     h3 { font-size: 16px; font-weight: 600; margin: 0 0 8px; }
-    .lede { max-width: 560px; font-size: 16px; line-height: 1.5; margin: 0 0 20px; }
+    .lede { max-width: 560px; font-size: 16px; line-height: 1.5; margin: 0 0 36px; }
 
     .hero {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 24px;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+      gap: 20px;
       align-items: start;
+      overflow: visible;
+    }
+    .hero > div:first-child {
+      overflow: visible;
+      min-width: 0;
     }
     .search {
       display: flex;
@@ -292,14 +448,124 @@
       padding: 0;
     }
     .search button:hover { background: #c8c8c8; }
-    .hcc {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 16px 18px;
-      max-width: 280px;
-      font-size: 14px;
+    .search-alt {
+      margin: -8px 0 48px;
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 34rem;
     }
-    .hcc p { margin: 0 0 12px; }
+    .search-alt a { font-weight: 500; }
+    .search-alt .sep { color: var(--line); margin: 0 8px; }
+    .hcc {
+      border: 1px solid #d2d2d2;
+      border-radius: 28px;
+      background: #fff;
+      padding: 16px 14px 14px;
+      width: 200px;
+      height: 168px;
+      flex: 0 0 200px;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.4;
+      color: #151515;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+    }
+    .hcc-in {
+      display: none;
+      width: 340px;
+      height: 168px;
+      flex: 0 0 340px;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 4px;
+      text-align: left;
+      border: 2px solid #c46100;
+      border-radius: 28px;
+      padding: 12px;
+      box-sizing: border-box;
+    }
+    .hcc-in .stat {
+      flex: 0 0 44%;
+      padding-right: 8px;
+      border-right: 1px solid #d2d2d2;
+    }
+    .hcc-in .n {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 1;
+      margin: 0 0 6px;
+    }
+    .hcc-in .n svg { display: block; }
+    .hcc-in .label {
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.25;
+      margin: 0 0 6px;
+    }
+    .hcc-in .cve {
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .hcc-in .copy {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 2px 0 2px 8px;
+      min-width: 0;
+    }
+    .hcc-in .copy p {
+      margin: 0;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+    body.in .hcc { display: none; }
+    body.in .hcc-in { display: flex; }
+    .promo-row {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: stretch;
+      gap: 12px;
+      margin: 0;
+      width: max-content;
+      max-width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+    .lightwell {
+      flex: 0 0 auto;
+      height: 168px;
+      line-height: 0;
+      display: block;
+      overflow: hidden;
+      border-radius: 28px;
+    }
+    .lightwell img {
+      display: block;
+      height: 168px;
+      width: auto;
+    }
+    .btn-hcc {
+      background: #ee0000;
+      color: #fff;
+      border: 0;
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-hcc:hover { background: #c9190b; }
     .btn-red {
       background: var(--red);
       color: #fff;
@@ -320,13 +586,12 @@
 
     .art {
       min-height: 220px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: grid;
+      place-items: center;
     }
     .art img {
       width: 100%;
-      max-width: 420px;
+      max-width: 340px;
       height: auto;
       display: block;
     }
@@ -348,6 +613,50 @@
     .card p { color: var(--ink); font-size: 14px; line-height: 1.45; flex: 1; }
     .card a { font-size: 14px; font-weight: 500; }
 
+    .lab-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin: 8px 0 0;
+    }
+    .lab-card {
+      background: #f2f2f2;
+      border: 1px solid #d2d2d2;
+      padding: 20px 20px 16px;
+      min-height: 240px;
+      display: flex;
+      flex-direction: column;
+    }
+    .lab-card .lab-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin: 0 0 16px;
+    }
+    .lab-card .lab-top svg {
+      flex: 0 0 36px;
+      color: #0066cc;
+    }
+    .lab-card h2 {
+      font-size: 16px;
+      font-weight: 500;
+      color: #0066cc;
+      margin: 2px 0 0;
+      line-height: 1.3;
+    }
+    .lab-card p {
+      font-size: 14px;
+      line-height: 1.45;
+      color: #151515;
+      margin: 0 0 16px;
+      flex: 1;
+    }
+    .lab-card a {
+      font-size: 14px;
+      font-weight: 600;
+      color: #0066cc;
+    }
+
     .foot-links {
       display: flex;
       gap: 18px;
@@ -367,6 +676,26 @@
       padding: 7px 8px;
       min-width: 140px;
     }
+    .filters.cve-bar {
+      display: grid;
+      grid-template-columns: minmax(280px, 2.4fr) minmax(220px, 1.2fr) minmax(200px, 1fr) auto auto;
+      gap: 12px 16px;
+      align-items: end;
+      width: 100%;
+    }
+    .filters.cve-bar > div { min-width: 0; }
+    .filters.cve-bar input,
+    .filters.cve-bar select {
+      display: block;
+      width: 100%;
+      min-width: 0;
+      height: 36px;
+      box-sizing: border-box;
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+    .filters.cve-bar .btn-blue { height: 36px; }
+    .filters.cve-bar .help { align-self: end; padding-bottom: 8px; white-space: nowrap; }
     .hint-row { font-size: 13px; color: var(--muted); margin: 0 0 12px; }
     .toggle { display: flex; align-items: center; gap: 8px; font-size: 13px; margin: 8px 0 16px; }
     .toggle input { accent-color: #0066cc; }
@@ -374,7 +703,31 @@
     table.data { width: 100%; border-collapse: collapse; font-size: 13px; }
     table.data th { text-align: left; border-bottom: 1px solid var(--line); padding: 8px 8px 8px 0; color: var(--muted); font-weight: 600; }
     table.data td { border-bottom: 1px solid #eee; padding: 12px 8px 12px 0; vertical-align: top; }
-    table.data tr { cursor: pointer; }
+    #cveTable { table-layout: fixed; }
+    #cveTable th, #cveTable td { padding: 10px 8px 10px 0; }
+    #cveTable col.cve { width: 15%; }
+    #cveTable col.desc { width: 32%; }
+    #cveTable col.sev { width: 11%; }
+    #cveTable col.bull { width: 18%; }
+    #cveTable col.rem { width: 13%; }
+    #cveTable col.date { width: 11%; }
+    #cveTable td.desc {
+      white-space: normal;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      line-height: 1.4;
+    }
+    #cveTable td.meta { white-space: nowrap; }
+    #cveTable td.bull { white-space: normal; }
+    #cveTable .badge { white-space: normal; }
+    .rem-dl {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .rem-none { color: #8a8d90; }
     table.data tr:hover td { background: #f8f8f8; }
 
     .sev {
@@ -452,8 +805,10 @@
     .doc { max-width: 720px; }
     .doc p { line-height: 1.55; }
     .list a { display: block; padding: 8px 0; border-bottom: 1px solid #eee; }
-    .crumb { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+    .crumb { font-size: 13px; color: var(--muted); margin: 0 0 12px; line-height: 1.4; }
     .crumb a { color: var(--link); }
+    .cve-hero .crumb { color: rgba(255,255,255,0.7); }
+    .cve-hero .crumb a { color: #bee1f4; }
 
     .nested { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
     .nested .card { min-height: 0; }
@@ -480,18 +835,19 @@
               <div class="mega-col">
                 <h3>How we work</h3>
                 <ul>
-                  <li><a href="#sdl" data-nav>Secure development</a></li>
+                  <li><a href="https://access.redhat.com/articles/red_hat_sdl" target="_blank" rel="noopener">Secure development</a></li>
                   <li><a href="#vuln" data-nav>Vulnerability management</a></li>
-                  <li><a href="#disclose" data-nav>Coordinated disclosure</a></li>
+                  <li><a href="https://access.redhat.com/articles/red-hat-coordinated-vulnerability-disclosure" target="_blank" rel="noopener">Coordinated disclosure</a></li>
                   <li><a href="#ir" data-nav>Incident response plan</a></li>
                   <li><a href="#overview" data-nav>Product Security overview</a></li>
-                  <li><a href="#lifecycle" data-nav>Lifecycle security update policy</a></li>
+                  <li><a href="https://access.redhat.com/security/lifecycle-security-update-policy" target="_blank" rel="noopener">Lifecycle security update policy</a></li>
                 </ul>
               </div>
               <div class="mega-col">
                 <h3>Tools and reference</h3>
                 <ul>
-                  <li><a href="#data" data-nav>For scanners and APIs</a></li>
+                  <li><a href="#feeds" data-nav>For scanners and APIs</a></li>
+                  <li><a href="#mcp" data-nav>Product Security MCP</a></li>
                   <li><a href="#learn" data-nav>Learn</a></li>
                   <li><a href="#pubs" data-nav>Product Security publications</a></li>
                   <li><a href="#glossary" data-nav>Security glossary</a></li>
@@ -509,6 +865,14 @@
             <path d="M10 10.5L14 14.5" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
           </svg>
           Search
+        </button>
+        <button class="tool ai" type="button" id="askAi" aria-label="Ask ProdSec AI">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M6.2 1.1 7 4.05l2.95.78L7 5.61l-.8 2.95-.8-2.95L2.45 4.83 5.4 4.05 6.2 1.1Z" fill="#fff"/>
+            <path d="M12.15 7.05 12.7 9.1l2.05.55-2.05.55-.55 2.05-.55-2.05-2.05-.55 2.05-.55.55-2.05Z" fill="#fff"/>
+            <path d="M10.35 1.7 10.7 3.05 12.05 3.4 10.7 3.75 10.35 5.1 10 3.75 8.65 3.4 10 3.05 10.35 1.7Z" fill="#fff"/>
+          </svg>
+          Ask ProdSec AI
         </button>
         <button class="tool" type="button" aria-label="English">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -532,16 +896,57 @@
           </svg>
           All Red Hat
         </button>
-        <span class="avatar" aria-hidden="true"></span>
+        <button class="tool login" type="button" id="mastLogin" aria-label="Log in">
+          <span class="login-anon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="9.2" stroke="#fff" stroke-width="1.4"/>
+              <circle cx="12" cy="10" r="3.1" fill="#fff"/>
+              <path d="M6.4 18.2c1.4-2.6 3.3-3.9 5.6-3.9s4.2 1.3 5.6 3.9" fill="#fff"/>
+            </svg>
+            Log in
+          </span>
+          <img class="login-ava" src="rhpsc-avatar.png" alt="" width="32" height="32" />
+        </button>
       </div>
     </header>
+    <div class="ai-coach" id="aiCoach" role="dialog" aria-label="Ask ProdSec AI">
+      <div class="ai-coach-card" id="aiCoachCard">
+        <button class="close" type="button" id="aiCoachClose" aria-label="Close">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M2 2l8 8M10 2L2 10" stroke="#6a6e73" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <p>Hello! You can ask ProdSec AI questions like the following, anytime:</p>
+        <div class="prompts">
+          <button type="button" data-prompt="example 1">example 1</button>
+          <button type="button" data-prompt="example 2">example 2</button>
+          <button type="button" data-prompt="example 3">example 3</button>
+        </div>
+      </div>
+    </div>
+    <aside class="chat-drawer" id="chatDrawer" aria-hidden="true">
+      <div class="chat-top">
+        <h2>Ask ProdSec AI</h2>
+        <button type="button" id="chatClose" class="chat-close" aria-label="Close">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M2 2l8 8M10 2L2 10" stroke="#151515" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          Close
+        </button>
+      </div>
+      <div class="body">Ask about Product Security. CVEs, advisories, errata, bulletins, and how we handle flaws. This is a prototype panel. It does not send a real answer.</div>
+      <div class="composer">
+        <input type="text" placeholder="Ask a Product Security question" aria-label="Ask a Product Security question" />
+        <button class="btn-blue" type="button">Send</button>
+      </div>
+    </aside>
 
     <!-- HOME -->
     <section class="page on" id="home">
       <div class="hero">
         <div>
           <h1>Red Hat Product Security Center</h1>
-          <p class="lede">Find security advisories, CVE status, and which Red Hat products are affected. Use the links below for how we build software, how we handle vulnerabilities, or how to report a flaw.</p>
+          <p class="lede">Search Red Hat security advisories, CVE status, and product impacts, or integrate our CVE, advisory, and errata data into your scanner, script, or MCP client. Learn more about our software build process, vulnerability handling, or how to report a flaw using the links below.</p>
           <form class="search" id="homeSearch" role="search">
             <span class="search-icon" aria-hidden="true">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -556,9 +961,32 @@
               </svg>
             </button>
           </form>
-          <div class="hcc">
-            <p>Hybrid Cloud Console shows how all of your registered systems are affected by CVEs.</p>
-            <button class="btn-red" type="button" id="loginBtn">Log in</button>
+          <p class="search-alt">Prefer a tool? <a href="#feeds" data-nav>For scanners and APIs</a><span class="sep">|</span><a href="#mcp" data-nav>Product Security MCP</a></p>
+          <div class="promo-row">
+            <div class="hcc" id="hccOut">
+              <p>Hybrid Cloud Console shows how all of your registered systems are affected by CVEs.</p>
+              <button class="btn-hcc" type="button" id="loginBtn">Log in</button>
+            </div>
+            <div class="hcc hcc-in" id="hccIn">
+              <div class="stat">
+                <div class="n">
+                  1
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                    <path d="M3 11l6-6 6 6" stroke="#151515" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9 5v10" stroke="#151515" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="label">System with known exploit</div>
+                <div class="cve">CVE-12345</div>
+              </div>
+              <div class="copy">
+                <p>Hybrid Cloud Console shows how all registered systems are affected by CVEs.</p>
+                <button class="btn-hcc" type="button" id="viewSystems">View systems</button>
+              </div>
+            </div>
+            <a class="lightwell" href="#lightwell" data-nav>
+              <img src="rhpsc-lightwell.jpg" alt="Lightwell. Text nudge. Learn more about Lightwell. Red Hat and IBM." width="1024" height="487" />
+            </a>
           </div>
         </div>
         <div class="art" aria-hidden="true">
@@ -569,7 +997,7 @@
         <article class="card">
           <h2>How we build.</h2>
           <p>How Red Hat hardens, tests, and signs product code.</p>
-          <a href="#sdl" data-nav>Secure development -&gt;</a>
+          <a href="https://access.redhat.com/articles/red_hat_sdl" target="_blank" rel="noopener">Secure development -&gt;</a>
         </article>
         <article class="card">
           <h2>How we respond.</h2>
@@ -579,13 +1007,11 @@
         <article class="card">
           <h2>How to report.</h2>
           <p>How to contact secalert and what happens after you send a report.</p>
-          <a href="#disclose" data-nav>Coordinated disclosure -&gt;</a>
+          <a href="https://access.redhat.com/articles/red-hat-coordinated-vulnerability-disclosure" target="_blank" rel="noopener">Coordinated disclosure -&gt;</a>
         </article>
       </div>
       <div class="foot-links">
-        <a href="#lifecycle" data-nav>Lifecycle Update Policy</a>
-        <span>|</span>
-        <a href="#data" data-nav>For scanners and APIs</a>
+        <a href="https://access.redhat.com/security/lifecycle-security-update-policy" target="_blank" rel="noopener">Lifecycle Update Policy</a>
         <span>|</span>
         <a href="#learn" data-nav>Learn</a>
       </div>
@@ -596,7 +1022,7 @@
       <h1>Red Hat CVE Database</h1>
       <p class="hint-row">This page provides search and filter options to find CVE information by product, state, publish date, and more.</p>
       <p class="hint-row">Use the Red Hat CVE Checker to view additional CVE details, as well as sign up for errata notifications.</p>
-      <div class="filters">
+      <div class="filters cve-bar">
         <div>
           <label>Search</label>
           <input id="cveQ" type="search" placeholder="CVE-2026-31431" />
@@ -610,16 +1036,27 @@
           <select id="cveSev"><option value="">All</option><option>Critical</option><option>Important</option><option>Moderate</option><option>Low</option></select>
         </div>
         <button class="btn-blue" type="button" id="cveGo">Submit</button>
-        <a href="#severity" data-nav style="align-self:center">Understanding severity ratings</a>
+        <a class="help" href="#severity" data-nav>Understanding severity ratings</a>
       </div>
       <label class="toggle"><input type="checkbox" id="cveAffecting" checked /> CVEs affecting Red Hat software</label>
       <label class="toggle"><input type="checkbox" id="cveHasBull" /> Has bulletin</label>
+      <label class="toggle"><input type="checkbox" id="cveHasRem" /> Has downloadable remediation</label>
       <table class="data" id="cveTable">
+        <colgroup>
+          <col class="cve" />
+          <col class="desc" />
+          <col class="sev" />
+          <col class="bull" />
+          <col class="rem" />
+          <col class="date" />
+        </colgroup>
         <thead>
           <tr>
             <th>CVE</th><th>Description</th>
             <th>Severity <span class="info" data-go="severity">i</span></th>
-            <th>Bulletin</th><th>Public date</th>
+            <th>Bulletin</th>
+            <th>Remediation</th>
+            <th>Public date</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -629,7 +1066,7 @@
     <!-- CVE DETAIL -->
     <section class="page" id="cve-detail">
       <div class="cve-hero">
-        <div class="crumb"><a href="#cve" data-nav>CVE Database</a> / <span id="cveIdLabel">CVE</span></div>
+        <div class="crumb"><a href="#home" data-nav>Product Security Center</a> / <a href="#cve" data-nav>CVE Database</a> / <span id="cveIdLabel">CVE</span></div>
         <h1 id="cveTitle">CVE</h1>
         <div class="meta" id="cveMeta"></div>
         <div class="score-row">
@@ -652,6 +1089,7 @@
       <div id="cveBullBanner"></div>
       <h3>Description</h3>
       <p id="cveDesc" class="doc"></p>
+      <div id="cveRemediation"></div>
       <h3>Related security advisories</h3>
       <div id="cveAdvs" class="list"></div>
       <h3>Related errata</h3>
@@ -738,27 +1176,27 @@
         <article class="card">
           <h3>Security update policy</h3>
           <p>Customer rules for when security updates exist and how long they stay available.</p>
-          <a href="#lifecycle" data-nav>Open policy -&gt;</a>
+          <a href="https://access.redhat.com/security/lifecycle-security-update-policy" target="_blank" rel="noopener">Open policy -&gt;</a>
         </article>
         <article class="card">
           <h3>Product life cycles</h3>
           <p>When a product still gets fixes. This is not how you analyze a CVE. Parked here, not as a Center card.</p>
-          <a href="#lifecycles" data-nav>Open product life cycles -&gt;</a>
+          <a href="https://access.redhat.com/product-life-cycles/update_policies" target="_blank" rel="noopener">Open product life cycles -&gt;</a>
         </article>
         <article class="card">
           <h3>How we escalate</h3>
           <p>Incident response plan. Child of this story, not a sibling of CVE.</p>
-          <a href="#ir" data-nav>Open plan -&gt;</a>
+          <a href="https://access.redhat.com/security/vulnerability-management-lifecyle" target="_blank" rel="noopener">Open plan -&gt;</a>
         </article>
         <article class="card">
           <h3>Publications</h3>
           <p>Risk reports and related Product Security publications.</p>
-          <a href="#pubs" data-nav>Open publications -&gt;</a>
+          <a href="https://access.redhat.com/security/publications" target="_blank" rel="noopener">Open publications -&gt;</a>
         </article>
         <article class="card">
           <h3>Product Security overview</h3>
           <p>Parked under this story as the leftover dump, then redirect here rather than keep it as a peer.</p>
-          <a href="#overview" data-nav>Open overview -&gt;</a>
+          <a href="https://access.redhat.com/security/overview" target="_blank" rel="noopener">Open overview -&gt;</a>
         </article>
         <article class="card">
           <h3>Learn</h3>
@@ -788,6 +1226,7 @@
     </section>
 
     <section class="page" id="lifecycles">
+      <div class="crumb"><a href="#home" data-nav>Product Security Center</a> / <a href="#vuln" data-nav>Vulnerability management</a> / Product life cycles</div>
       <h1>Product life cycles</h1>
       <div class="doc">
         <p>When a product is in Full Support, Maintenance, or Extended Life. Closest to vulnerability management when the question is whether a product still gets fixes.</p>
@@ -796,10 +1235,30 @@
     </section>
 
     <section class="page" id="data">
-      <div class="crumb"><a href="#home" data-nav>Product Security Center</a> / For scanners and APIs</div>
-      <h1>Security data</h1>
+      <div class="crumb"><a href="#home" data-nav>Product Security Center</a> / Get the data</div>
+      <h1>Get the data without this page</h1>
+      <p class="hint-row">CVE Database, Security Advisories, and Errata stay in the masthead for people who want the GUI. These two paths pull the same records into a tool.</p>
+      <div class="cards">
+        <article class="card">
+          <p class="kicker" style="font-size:12px;color:#6a6e73;margin:0 0 8px">Feeds</p>
+          <h2>For scanners and APIs</h2>
+          <p>CSAF, VEX, OVAL, SBOM, and related files for scanners and scripts.</p>
+          <a href="#feeds" data-nav>Open security data -&gt;</a>
+        </article>
+        <article class="card">
+          <p class="kicker" style="font-size:12px;color:#6a6e73;margin:0 0 8px">Client</p>
+          <h2>Product Security MCP</h2>
+          <p>Connect an agent or MCP client instead of searching this GUI. Query CVEs, advisories, and errata from the tool you already use.</p>
+          <a href="#mcp" data-nav>Open MCP -&gt;</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="page" id="feeds">
+      <div class="crumb"><a href="#home" data-nav>Product Security Center</a> / <a href="#data" data-nav>Get the data</a> / For scanners and APIs</div>
+      <h1>For scanners and APIs</h1>
       <div class="doc">
-        <p>Machine-readable feeds for scanners and automation. The Center only links here. It does not list these formats on the home page.</p>
+        <p>Machine-readable feeds for scanners and automation. This is not the Product Security MCP. Use <a href="#mcp" data-nav>Product Security MCP</a> if you want a client instead of files.</p>
         <p>Live destination: access.redhat.com/security/data</p>
         <ul>
           <li>CSAF / VEX documents</li>
@@ -811,16 +1270,81 @@
       </div>
     </section>
 
+    <section class="page" id="lightwell">
+      <div class="crumb"><a href="#home" data-nav>Product Security Center</a> / Lightwell</div>
+      <h1>Lightwell</h1>
+      <div class="doc">
+        <p>Placeholder for the Lightwell story. The home card is a nudge. This page is where Learn more about Lightwell lands in the mock.</p>
+        <p>Red Hat and IBM stay as partners on the card. Hybrid Cloud Console stays the path for registered systems. Lightwell is a separate offer next to that box, not a replacement for CVE search.</p>
+      </div>
+    </section>
+
+    <section class="page" id="mcp">
+      <div class="crumb"><a href="#home" data-nav>Product Security Center</a> / <a href="#data" data-nav>Get the data</a> / Product Security MCP</div>
+      <h1>Product Security MCP</h1>
+      <div class="doc">
+        <p>Skip this website. Connect a Model Context Protocol client and query the same CVE, advisory, and errata records the GUI shows.</p>
+        <p>This is an alternative to searching the CVE database, Security Advisories, and Errata in the browser. It is not a replacement for Hybrid Cloud Console, which is about your registered systems.</p>
+        <h3>What a client can ask</h3>
+        <ul>
+          <li>Find a CVE and its Red Hat severity</li>
+          <li>List security advisories for a product</li>
+          <li>Return the related errata you apply</li>
+          <li>Point to a bulletin when a CVE is covered by one</li>
+        </ul>
+        <h3>What it will not do</h3>
+        <ul>
+          <li>It will not disclose embargoed issues</li>
+          <li>It will not replace secalert reporting</li>
+          <li>It will not replace scanner feeds. Those stay on <a href="#feeds" data-nav>For scanners and APIs</a></li>
+        </ul>
+        <h3>Setup</h3>
+        <p>Placeholder for endpoint, authentication, and a short example prompt. Wire this when the MCP is real. For this mock, treat it as the specialist page the home search line and References both open.</p>
+      </div>
+    </section>
+
     <section class="page" id="learn">
       <div class="crumb"><a href="#home" data-nav>Product Security Center</a> / Learn</div>
-      <h1>Security labs</h1>
-      <div class="doc">
-        <p>Training and walkthrough sessions on scanners, data, and remediation. Not a lookup tool. Linked from Learn on the Center, and from Vulnerability management.</p>
-        <p>Includes the vulnerability scanning walkthrough.</p>
+      <h1>Learn</h1>
+      <div class="lab-grid">
+        <article class="lab-card">
+          <div class="lab-top">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+              <path d="M18 4l12 4v10c0 8-5.2 13.2-12 15.5C11.2 31.2 6 26 6 18V8l12-4z" stroke="#0066cc" stroke-width="1.8"/>
+              <path d="M13 18l10-6" stroke="#0066cc" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+            <h2>SSH Vulnerability Helper</h2>
+          </div>
+          <p>This application helps fix/mitigate SSH vulnerabilities in Red Hat Enterprise Linux.</p>
+          <a href="https://access.redhat.com/labs/sshlab" target="_blank" rel="noopener">Go to App -&gt;</a>
+        </article>
+        <article class="lab-card">
+          <div class="lab-top">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+              <path d="M18 4l12 4v10c0 8-5.2 13.2-12 15.5C11.2 31.2 6 26 6 18V8l12-4z" stroke="#0066cc" stroke-width="1.8"/>
+              <path d="M13 18l10-6" stroke="#0066cc" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+            <h2>Red Hat Product Errata Advisory Checker</h2>
+          </div>
+          <p>This application helps you retrieve information of Red Hat Product Errata. It supports filtering errata advisories by type or product, retrieving all errata advisories within a selected date range, and saving them into a CSV file.</p>
+          <a href="https://access.redhat.com/labs/errata" target="_blank" rel="noopener">Go to App -&gt;</a>
+        </article>
+        <article class="lab-card">
+          <div class="lab-top">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+              <path d="M18 4l12 4v10c0 8-5.2 13.2-12 15.5C11.2 31.2 6 26 6 18V8l12-4z" stroke="#0066cc" stroke-width="1.8"/>
+              <path d="M13 18l10-6" stroke="#0066cc" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+            <h2>Red Hat CVE Checker</h2>
+          </div>
+          <p>This application helps you retrieve information for multiple CVEs which are affecting any currently supported Red Hat product by uploading a plain text file containing comma-separated CVE IDs, searching by date range, or through user input.</p>
+          <a href="https://access.redhat.com/labs/cvechecker" target="_blank" rel="noopener">Go to App -&gt;</a>
+        </article>
       </div>
     </section>
 
     <section class="page" id="ir">
+      <div class="crumb"><a href="#home" data-nav>Product Security Center</a> / <a href="#vuln" data-nav>Vulnerability management</a> / Incident response plan</div>
       <h1>Incident response plan</h1>
       <div class="doc">
         <p>How we escalate. When PSIRT declares Minor, Exploit, or Major. Nested under Vulnerability management.</p>
@@ -829,6 +1353,7 @@
     </section>
 
     <section class="page" id="severity">
+      <div class="crumb"><a href="#home" data-nav>Product Security Center</a> / Understanding severity ratings</div>
       <h1>Understanding severity ratings</h1>
       <div class="doc">
         <p>Red Hat rates issues on a four-point scale: Low, Moderate, Important, and Critical. CVSS is extra guidance. Red Hat does not use CVSS alone to set this rating.</p>
@@ -838,6 +1363,7 @@
     </section>
 
     <section class="page" id="glossary">
+      <div class="crumb"><a href="#home" data-nav>Product Security Center</a> / Security glossary</div>
       <h1>Security glossary</h1>
       <div class="doc">
         <p>A reference list for the whole Product Security Center. Not a secure-development, vulnerability-management, or disclosure page.</p>
@@ -846,6 +1372,7 @@
     </section>
 
     <section class="page" id="blog">
+      <div class="crumb"><a href="#home" data-nav>Product Security Center</a> / Security blog</div>
       <h1>Security blog</h1>
       <div class="doc">
         <p>A feed. Posts jump across build, respond, and report. Keep it in References, not as a fourth home card.</p>
@@ -854,6 +1381,7 @@
     </section>
 
     <section class="page" id="overview">
+      <div class="crumb"><a href="#home" data-nav>Product Security Center</a> / <a href="#vuln" data-nav>Vulnerability management</a> / Product Security overview</div>
       <h1>Product Security overview</h1>
       <div class="doc">
         <p>This page mixes leftover topics. Park it under Vulnerability management, then redirect here rather than keep it as a peer of the Center.</p>
@@ -862,6 +1390,7 @@
     </section>
 
     <section class="page" id="pubs">
+      <div class="crumb"><a href="#home" data-nav>Product Security Center</a> / Product Security publications</div>
       <h1>Product Security publications</h1>
       <div class="doc">
         <p>Risk reports and related publications.</p>
@@ -870,7 +1399,7 @@
     </section>
 
     <section class="page" id="bulletin-detail">
-      <div class="crumb"><a href="#advisories" data-nav>Security Advisories</a> / Bulletins / <span id="bullId"></span></div>
+      <div class="crumb"><a href="#home" data-nav>Product Security Center</a> / <a href="#advisories" data-nav>Security Advisories</a> / Bulletins / <span id="bullId"></span></div>
       <h1 id="bullTitle">Bulletin</h1>
       <p id="bullStatus" class="hint-row"></p>
       <div class="doc">
@@ -884,7 +1413,7 @@
     </section>
 
     <section class="page" id="adv-detail">
-      <div class="crumb"><a href="#advisories" data-nav>Security Advisories</a> / <span id="advId"></span></div>
+      <div class="crumb"><a href="#home" data-nav>Product Security Center</a> / <a href="#advisories" data-nav>Security Advisories</a> / <span id="advId"></span></div>
       <h1 id="advTitle">Advisory</h1>
       <p id="advSyn"></p>
       <p class="hint-row">This page is the security advisory write-up. The packaged release is on <a href="#errata" data-nav>Errata</a>.</p>
@@ -894,10 +1423,10 @@
 
 <script>
 const CVES = [
-  { id: "CVE-2026-31431", desc: "Cryptographic subsystem privilege escalation in the Linux kernel. Copy Fail.", sev: "Important", date: "4/22/26", cvss: "7.8", bulletin: "RHSB-2026-002", bulletinLive: false, product: "RHEL", advisories: ["RHSA-2026:3140"], errata: ["RHSA-2026:3140"] },
-  { id: "CVE-2026-80844", desc: "Network stack privilege escalation. DirtyAH6. Covered by the ongoing network-stack bulletin.", sev: "Important", date: "8/14/26", cvss: "7.8", bulletin: "RHSB-2026-011", bulletinLive: true, product: "RHEL", advisories: ["RHSA-2026:8801"], errata: ["RHSA-2026:8801"] },
-  { id: "CVE-2026-8474", desc: "Automation controller input validation around sanitize_jinja.", sev: "Important", date: "9/22/26", cvss: "7.5", bulletin: null, bulletinLive: false, product: "Ansible", advisories: ["RHSA-2026:7715"], errata: ["RHSA-2026:7715"] },
-  { id: "CVE-2026-49975", desc: "HTTP/2 HPACK denial of service. HTTP/2 Bomb.", sev: "Important", date: "6/2/26", cvss: "7.5", bulletin: "RHSB-2026-007", bulletinLive: false, product: "OpenShift", advisories: ["RHSA-2026:6200"], errata: ["RHSA-2026:6200"] }
+  { id: "CVE-2026-31431", desc: "Cryptographic subsystem privilege escalation in the Linux kernel. Copy Fail.", sev: "Important", date: "4/22/26", cvss: "7.8", bulletin: "RHSB-2026-002", bulletinLive: false, product: "RHEL", advisories: ["RHSA-2026:3140"], errata: ["RHSA-2026:3140"], remediation: "remediation-CVE-2026-31431.yml" },
+  { id: "CVE-2026-80844", desc: "Network stack privilege escalation. DirtyAH6. Covered by the ongoing network-stack bulletin.", sev: "Important", date: "8/14/26", cvss: "7.8", bulletin: "RHSB-2026-011", bulletinLive: true, product: "RHEL", advisories: ["RHSA-2026:8801"], errata: ["RHSA-2026:8801"], remediation: null },
+  { id: "CVE-2026-8474", desc: "Automation controller input validation around sanitize_jinja.", sev: "Important", date: "9/22/26", cvss: "7.5", bulletin: null, bulletinLive: false, product: "Ansible", advisories: ["RHSA-2026:7715"], errata: ["RHSA-2026:7715"], remediation: "remediation-CVE-2026-8474.yml" },
+  { id: "CVE-2026-49975", desc: "HTTP/2 HPACK denial of service. HTTP/2 Bomb.", sev: "Important", date: "6/2/26", cvss: "7.5", bulletin: "RHSB-2026-007", bulletinLive: false, product: "OpenShift", advisories: ["RHSA-2026:6200"], errata: ["RHSA-2026:6200"], remediation: null }
 ];
 
 const ADVS = [
@@ -934,6 +1463,9 @@ const URLS = {
   lifecycle: "access.redhat.com/security/lifecycle-security-update-policy",
   lifecycles: "access.redhat.com/product-life-cycles/update_policies",
   data: "access.redhat.com/security/data",
+  feeds: "access.redhat.com/security/data",
+  mcp: "access.redhat.com/security/mcp",
+  lightwell: "redhat.com/lightwell",
   learn: "access.redhat.com/security/vulnerability-walkthrough",
   ir: "access.redhat.com/security/vulnerability-management-lifecyle",
   severity: "access.redhat.com/security/updates/classification",
@@ -1003,8 +1535,71 @@ $("#mastSearch").addEventListener("click", () => {
   requestAnimationFrame(() => $("#homeQ").focus());
 });
 
+function setChat(open) {
+  $("#chatDrawer").classList.toggle("open", open);
+  $("#chatDrawer").setAttribute("aria-hidden", open ? "false" : "true");
+  $("#askAi").setAttribute("aria-expanded", open ? "true" : "false");
+  if (open) hideCoach();
+}
+$("#askAi").addEventListener("click", () => {
+  setChat(!$("#chatDrawer").classList.contains("open"));
+});
+$("#chatClose").addEventListener("click", () => setChat(false));
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape") return;
+  if ($("#chatDrawer").classList.contains("open")) setChat(false);
+  else hideCoach();
+});
+
+function placeCoach() {
+  const btn = $("#askAi");
+  const card = $("#aiCoachCard");
+  const shell = document.querySelector(".shell").getBoundingClientRect();
+  const r = btn.getBoundingClientRect();
+  const mid = r.left + r.width / 2 - shell.left;
+  const width = 380;
+  let left = mid - width / 2;
+  left = Math.max(16, Math.min(left, shell.width - width - 16));
+  card.style.left = left + "px";
+  card.style.setProperty("--arrow", (mid - left) + "px");
+}
+function showCoach() {
+  $("#aiCoach").classList.add("show");
+  $("#askAi").classList.add("hint");
+  placeCoach();
+}
+function hideCoach() {
+  $("#aiCoach").classList.remove("show");
+  $("#askAi").classList.remove("hint");
+}
+$("#aiCoachClose").addEventListener("click", hideCoach);
+$all("#aiCoach .prompts button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const field = $("#chatDrawer .composer input");
+    field.value = btn.dataset.prompt;
+    hideCoach();
+    setChat(true);
+    field.focus();
+  });
+});
+window.addEventListener("resize", () => {
+  if ($("#aiCoach").classList.contains("show")) placeCoach();
+});
+requestAnimationFrame(showCoach);
+function setLoggedIn(on) {
+  $("#mastLogin").classList.toggle("logged-in", on);
+  $("#mastLogin").setAttribute("aria-label", on ? "Account" : "Log in");
+  document.body.classList.toggle("in", on);
+}
+$("#mastLogin").addEventListener("click", () => {
+  setLoggedIn(!$("#mastLogin").classList.contains("logged-in"));
+});
+
 $("#loginBtn").addEventListener("click", () => {
-  alert("Prototype only. Hybrid Cloud Console login is not wired.");
+  setLoggedIn(true);
+});
+$("#viewSystems").addEventListener("click", () => {
+  alert("Prototype only. Hybrid Cloud Console is not wired.");
 });
 
 function sevHtml(s) { return `<span class="sev ${s}">${s}</span>`; }
@@ -1014,27 +1609,33 @@ function renderCves() {
   const sev = $("#cveSev").value;
   const prod = $("#cveProduct").value;
   const has = $("#cveHasBull").checked;
+  const hasRem = $("#cveHasRem").checked;
   const rows = CVES.filter(c => {
     if (q && !(`${c.id} ${c.desc}`.toLowerCase().includes(q))) return false;
     if (sev && c.sev !== sev) return false;
     if (prod && c.product !== prod) return false;
     if (has && !c.bulletin) return false;
+    if (hasRem && !c.remediation) return false;
     return true;
   });
   $("#cveTable tbody").innerHTML = rows.map(c => `
     <tr data-open="cve-detail?id=${c.id}">
-      <td><a href="#cve-detail?id=${c.id}">${c.id}</a></td>
-      <td>${c.desc}</td>
-      <td>${sevHtml(c.sev)}</td>
-      <td>${c.bulletin
+      <td class="meta"><a href="#cve-detail?id=${c.id}">${c.id}</a></td>
+      <td class="desc">${c.desc}</td>
+      <td class="meta">${sevHtml(c.sev)}</td>
+      <td class="bull">${c.bulletin
         ? `<a class="badge ${c.bulletinLive ? "live" : ""}" href="#bulletin-detail?id=${c.bulletin}">${c.bulletin}${c.bulletinLive ? " Ongoing" : ""}</a>`
         : `<span style="color:#8a8d90">None</span>`}</td>
-      <td>${c.date}</td>
+      <td class="meta">${c.remediation
+        ? `<a class="rem-dl" href="${c.remediation}" download onclick="event.stopPropagation()">Download</a>`
+        : `<span class="rem-none">Not yet</span>`}</td>
+      <td class="meta">${c.date}</td>
     </tr>`).join("");
 }
 
 $("#cveGo").addEventListener("click", renderCves);
 $("#cveHasBull").addEventListener("change", renderCves);
+$("#cveHasRem").addEventListener("change", renderCves);
 $("#cveSev").addEventListener("change", renderCves);
 $("#cveQ").addEventListener("keydown", e => { if (e.key === "Enter") renderCves(); });
 
@@ -1058,6 +1659,12 @@ function showCve(id) {
   }
   $("#cveAdvs").innerHTML = c.advisories.map(a => `<a href="#adv-detail?id=${a}">${a}</a>`).join("");
   $("#cveErr").innerHTML = c.errata.map(a => `<a href="#errata">${a} on Errata</a>`).join("");
+  const rem = $("#cveRemediation");
+  if (c.remediation) {
+    rem.innerHTML = `<h3>Remediation</h3><p class="hint-row">A downloadable remediation is available for this CVE.</p><p><a class="rem-dl" href="${c.remediation}" download>Download remediation</a></p>`;
+  } else {
+    rem.innerHTML = `<h3>Remediation</h3><p class="rem-none">Not yet available.</p>`;
+  }
 }
 
 function renderAdvs() {
