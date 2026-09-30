@@ -534,6 +534,53 @@
     }
     body.in .hcc { display: none; }
     body.in .hcc-in { display: flex; }
+    .cve-impact {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: stretch;
+      gap: 10px;
+      margin: 0 0 20px;
+      max-width: 100%;
+    }
+    .cve-impact .hcc.cve-login {
+      width: auto;
+      max-width: 220px;
+      min-height: 96px;
+      height: 96px;
+      flex: 0 0 220px;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      text-align: left;
+      padding: 10px 12px;
+      font-size: 12px;
+      line-height: 1.3;
+      border-radius: 16px;
+    }
+    .cve-impact .hcc.cve-login p { margin: 0; }
+    .cve-impact .hcc-in {
+      width: 220px;
+      height: 96px;
+      flex: 0 0 220px;
+      padding: 8px 10px;
+      border-radius: 16px;
+      gap: 2px;
+    }
+    .cve-impact .hcc-in .n { font-size: 16px; margin: 0 0 2px; }
+    .cve-impact .hcc-in .n svg { width: 12px; height: 12px; }
+    .cve-impact .hcc-in .label { font-size: 11px; margin: 0 0 2px; }
+    .cve-impact .hcc-in .cve { font-size: 11px; }
+    .cve-impact .hcc-in .copy p { font-size: 10px; line-height: 1.25; }
+    .cve-impact .hcc-in .copy { padding: 0 0 0 6px; }
+    .cve-impact .btn-hcc { padding: 4px 12px; font-size: 11px; }
+    .cve-impact .lightwell {
+      height: 96px;
+      border-radius: 16px;
+    }
+    .cve-impact .lightwell img {
+      height: 96px;
+    }
     .promo-row {
       display: flex;
       flex-wrap: nowrap;
@@ -1025,6 +1072,32 @@
       <h1>Red Hat CVE Database</h1>
       <p class="hint-row">This page provides search and filter options to find CVE information by product, state, publish date, and more.</p>
       <p class="hint-row">Use the Red Hat CVE Checker to view additional CVE details, as well as sign up for errata notifications.</p>
+      <div class="cve-impact">
+        <div class="hcc cve-login" id="cveHccOut">
+          <p>Log in to HCC to see how your systems are impacted by CVEs.</p>
+          <button class="btn-hcc" type="button" id="cveLoginBtn">Log in</button>
+        </div>
+        <div class="hcc hcc-in" id="cveHccIn">
+          <div class="stat">
+            <div class="n">
+              1
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <path d="M3 11l6-6 6 6" stroke="#151515" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9 5v10" stroke="#151515" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="label">System with known exploit</div>
+            <div class="cve">CVE-12345</div>
+          </div>
+          <div class="copy">
+            <p>Hybrid Cloud Console shows how all registered systems are affected by CVEs.</p>
+            <button class="btn-hcc" type="button" id="cveViewSystems">View systems</button>
+          </div>
+        </div>
+        <a class="lightwell" href="#lightwell" data-nav>
+          <img src="rhpsc-lightwell.jpg" alt="Lightwell. Text nudge. Learn more about Lightwell. Red Hat and IBM." width="1024" height="487" />
+        </a>
+      </div>
       <div class="filters cve-bar">
         <div>
           <label>Search</label>
@@ -1605,7 +1678,13 @@ $("#mastLogin").addEventListener("click", () => {
 $("#loginBtn").addEventListener("click", () => {
   setLoggedIn(true);
 });
+$("#cveLoginBtn").addEventListener("click", () => {
+  setLoggedIn(true);
+});
 $("#viewSystems").addEventListener("click", () => {
+  alert("Prototype only. Hybrid Cloud Console is not wired.");
+});
+$("#cveViewSystems").addEventListener("click", () => {
   alert("Prototype only. Hybrid Cloud Console is not wired.");
 });
 
