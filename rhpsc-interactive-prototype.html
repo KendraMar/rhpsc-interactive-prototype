@@ -899,6 +899,7 @@
                   <li><a href="#feeds" data-nav>For scanners and APIs</a></li>
                   <li><a href="#mcp" data-nav>Product Security MCP</a></li>
                   <li><a href="#learn" data-nav>Learn</a></li>
+                  <li><a href="https://access.redhat.com/security/updates/classification" target="_blank" rel="noopener">Understanding severity ratings</a></li>
                   <li><a href="#pubs" data-nav>Product Security publications</a></li>
                   <li><a href="#glossary" data-nav>Security glossary</a></li>
                   <li><a href="#blog" data-nav>Security blog</a></li>
@@ -1070,7 +1071,7 @@
     <!-- CVE LIST -->
     <section class="page" id="cve">
       <h1>Red Hat CVE Database</h1>
-      <p class="hint-row">This page provides search and filter options to find CVE information by product, state, publish date, and more.</p>
+      <p class="hint-row">Find CVEs by product, <a href="https://access.redhat.com/security/updates/classification" target="_blank" rel="noopener">severity</a>, and more.</p>
       <p class="hint-row">Use the Red Hat CVE Checker to view additional CVE details, as well as sign up for errata notifications.</p>
       <div class="cve-impact">
         <div class="hcc cve-login" id="cveHccOut">
@@ -1112,7 +1113,6 @@
           <select id="cveSev"><option value="">All</option><option>Critical</option><option>Important</option><option>Moderate</option><option>Low</option></select>
         </div>
         <button class="btn-blue" type="button" id="cveGo">Submit</button>
-        <a class="help" href="#severity" data-nav>Understanding severity ratings</a>
       </div>
       <label class="toggle"><input type="checkbox" id="cveAffecting" checked /> CVEs affecting Red Hat software</label>
       <label class="toggle"><input type="checkbox" id="cveHasBull" /> Has bulletin</label>
